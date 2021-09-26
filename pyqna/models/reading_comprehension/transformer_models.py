@@ -1,9 +1,9 @@
 import torch
 from typing import Dict, List, Union
-from ..base import ReadingComprehensionModel
-from ...utils.logging import create_logger, raise_if_not
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, AutoConfig
 
+from ..base import ReadingComprehensionModel
+from ...utils.logging import create_logger, raise_if_not
 
 logger = create_logger(__name__)
 
@@ -16,6 +16,15 @@ class TransformerQnAModel(ReadingComprehensionModel):
     """
 
     def __init__(self, config: Dict) -> None:
+        """
+        Initialize the model.
+
+        Parameters
+        ----------
+        config : Dict
+            Configuration of the model. See the config of model you're using for more details.
+            Pretrained config is used by default and can be overridden by the config passed here.
+        """
         super().__init__(config)
 
         # Initialize tokenizer and config
@@ -43,6 +52,9 @@ class TransformerQnAModel(ReadingComprehensionModel):
                 self.config.__dict__[key] = value
 
     def _infer_from_model(self, context: str, question: str) -> str:
+        """
+        Infer the answer from the model. One question at a time.
+        """
         inputs = self.tokenizer.encode_plus(
             question, context, add_special_tokens=True, return_tensors="pt"
         )
@@ -72,6 +84,21 @@ class TransformerQnAModel(ReadingComprehensionModel):
     def get_answer(
         self, context: str, question: Union[str, List[str]]
     ) -> Union[str, List[str]]:
+        """
+        Get the answer from the model.
+
+        Parameters
+        ----------
+        context : str
+            The context of the question.
+        question : Union[str, List[str]]
+            The question(s) to answer.
+
+        Returns
+        -------
+        Union[str, List[str]]
+            The answer(s) to the question(s).
+        """
         raise_if_not(self.is_trained, "Cannot get answers from an untrained model.")
 
         self.model.eval()
