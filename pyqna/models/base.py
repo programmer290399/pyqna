@@ -25,9 +25,28 @@ class QnAModelBase(ABC):
         """
         raise NotImplementedError()
 
+
+class ReadingComprehensionModel(QnAModelBase, ABC):
     @abstractmethod
-    def predict(self, input_data) -> None:
+    def __init__(self, config: Dict) -> None:
+        super().__init__()
+
+    @abstractmethod
+    def get_answer(self, context, question) -> None:
         """
-        Return a prediction using single data point given.
+        Return the inference from model using the given context and question.
+        """
+        raise NotImplementedError()
+
+
+class OpenDomainModel(QnAModelBase, ABC):
+    @abstractmethod
+    def __init__(self, config: Dict) -> None:
+        super().__init__()
+
+    @abstractmethod
+    def get_answer(self, question) -> None:
+        """
+        Return the inference from model using the given question.
         """
         raise NotImplementedError()
