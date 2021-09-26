@@ -1,7 +1,7 @@
 """
 This file is meant to hold all the base classes for various types of model classes.
 """
-from typing import Dict
+from typing import Dict, List, Union
 from abc import ABC, abstractmethod
 
 
@@ -29,10 +29,10 @@ class QnAModelBase(ABC):
 class ReadingComprehensionModel(QnAModelBase, ABC):
     @abstractmethod
     def __init__(self, config: Dict) -> None:
-        super().__init__()
+        super().__init__(config)
 
     @abstractmethod
-    def get_answer(self, context, question) -> None:
+    def get_answer(self, context: str, question: Union[str, List[str]]) -> None:
         """
         Return the inference from model using the given context and question.
         """
@@ -45,7 +45,7 @@ class OpenDomainModel(QnAModelBase, ABC):
         super().__init__()
 
     @abstractmethod
-    def get_answer(self, question) -> None:
+    def get_answer(self, question: Union[str, List[str]]) -> None:
         """
         Return the inference from model using the given question.
         """
