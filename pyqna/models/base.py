@@ -1,5 +1,5 @@
 """
-This file is meant to hold all the base classes for 
+This file is meant to hold all the base classes for
 various types of model classes.
 """
 from typing import Dict, List, Union
