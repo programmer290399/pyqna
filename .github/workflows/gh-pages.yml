@@ -1,48 +1,45 @@
-name: GitHub Pages
+name: github pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  release_sphinx:
-    needs: [build]
-    runs-on: ubuntu-latest
-    container:
-      image: python:3.6
-      volumes:
-        - dist:dist
-        - public:public
+  deploy:
+    runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
 
-      # check out sources that will be used for autodocs, plus readme
-      - uses: actions/checkout@v1
-
-      # download wheel that was build and uploaded in the build step
-      - uses: actions/download-artifact@v1
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          name: distributions
-          path: dist
+          python-version: '3.8'
 
-      # didn't need to change anything here, but had to add sphinx.ext.githubpages
-      # to my conf.py extensions list. that fixes the broken uploads
-      - name: Building documentation
+      - name: Upgrade pip
         run: |
-          make -C docs html 
+          # install pip=>20.1 to use "pip cache dir"
+          python3 -m pip install --upgrade pip
 
-      # still need to build and set the PAT to get a rebuild on the pages job,
-      # apart from that quite clean and nice 
-      - name: github pages deploy
-        uses: peaceiris/actions-gh-pages@v2.3.1
-        env:
-          PERSONAL_TOKEN: ${{ secrets.PAT }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: public
+      - name: Get pip cache dir
+        id: pip-cache
+        run: echo "::set-output name=dir::$(pip cache dir)"
 
-      # since gh-pages has a history, this step might no longer be necessary.
-      - uses: actions/upload-artifact@v1
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
-          name: documentation
-          path: public
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: python3 -m pip install -r ./requirements.txt
+
+      - run: make -C docs html
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
