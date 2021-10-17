@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; pyqna 0.post1+g920d35e documentation</title>
+  <title>Usage &mdash; pyqna 0.post1+g97099b4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <a href="index.html" class="icon icon-home"> pyqna
           </a>
               <div class="version">
-                0.post1+g920d35e
+                0.post1+g97099b4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -78,7 +78,19 @@
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
 <p>Start by importing pyqna.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyqna</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyqna.models.reading_comprehension.transformer_models</span> <span class="kn">import</span> <span class="n">TransformerQnAModel</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TransformerQnAModel</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;model_name&quot;</span><span class="p">:</span> <span class="s2">&quot;distilbert-base-uncased-distilled-squad&quot;</span><span class="p">,</span> <span class="s2">&quot;pre_trained&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">get_answer</span><span class="p">(</span>
+        <span class="s2">&quot;New Zealand (Māori: Aotearoa) is a sovereign island country in the southwestern Pacific Ocean.</span><span class="se">\</span>
+<span class="s2">            It has a total land area of 268,000 square kilometres (103,500 sq mi), and a population of</span><span class="se">\</span>
+<span class="s2">            4.9 million. New Zealand&#39;s capital city is Wellington, and its most populous city is Auckland.&quot;</span><span class="p">,</span>
+        <span class="p">[</span><span class="s2">&quot;How many people live in New Zealand?&quot;</span><span class="p">,</span> <span class="s2">&quot;What&#39;s the largest city?&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </section>
