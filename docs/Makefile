@@ -6,7 +6,7 @@ SPHINXOPTS    = "-W"  # This flag turns warnings into errors.
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = PackagingScientificPython
 SOURCEDIR     = source
-BUILDDIR      = build
+BUILDDIR      = ./../pages
 
 # Put it first so that "make" without argument is like "make help".
 help:
