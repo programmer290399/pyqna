@@ -12,7 +12,7 @@ pyqna
 A simple python package for question answering
 
 * Free software: 3-clause BSD license
-* Documentation: https://programmer290399.github.io/pyqna.
+* Documentation: (COMING SOON!) https://programmer290399.github.io/pyqna.
 
 Features
 --------
