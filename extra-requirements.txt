@@ -10,5 +10,5 @@
 
 # Source: https://hanxiao.io/2019/11/07/A-Better-Practice-for-Managing-extras-require-Dependencies-in-Python/
 
-pytorch:                transformers
+torch:                transformers
 transformers:           transformers
