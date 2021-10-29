@@ -4,4 +4,4 @@ Installation
 
 At the command line::
 
-    $ pip install pyqna
+    $ pip install pyqna[all]

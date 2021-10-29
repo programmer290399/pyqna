@@ -1,0 +1,14 @@
+# FORMAT
+# Put your extra requirements here in the following format
+#
+# package[version_required]: tag1, tag2, ...
+
+# Guidelines for adding dependencies here:
+#   - always reuse the existing feature tags if possible.
+#   - when create a new tag, keep it alphabetical, short and general.
+#   - tag order does not matter, and duplicated tag will be ignored.
+
+# Source: https://hanxiao.io/2019/11/07/A-Better-Practice-for-Managing-extras-require-Dependencies-in-Python/
+
+torch:                transformers
+transformers:           transformers
