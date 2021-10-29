@@ -2,5 +2,6 @@
 .vscode
 __pycache__
 pyqna.egg-info
-docs/build
+build
 pages
+dist
