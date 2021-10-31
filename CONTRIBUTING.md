@@ -1,75 +1,102 @@
-============
-Contributing
-============
 
-<p>Contributions are welcome, and they are greatly appreciated! Every little bit helps, and credit will always be given.</p>
+# Contributing
+
+Contributions are welcome, and they are greatly appreciated! Every
+little bit helps, and credit will always be given.
 
 You can contribute in many ways:
 
-<p>Types of Contributions</p>
+# Types of Contributions
 
-----------------------
-Report Bugs
-~~~~~~~~~~~
+## Report Bugs
 
-Report bugs at https://github.com/programmer290399/pyqna/issues.
+Report bugs [here](https://github.com/programmer290399/pyqna/issues)
 
 If you are reporting a bug, please include:
 
-Any details about your local setup that might be helpful in troubleshooting.
-Detailed steps to reproduce the bug.
-Fix Bugs
-Look through the GitHub issues for bugs. Anything tagged with "bug" is open to whoever wants to implement it.
+-   Any details about your local setup that might be helpful in
+    troubleshooting.
+-   Detailed steps to reproduce the bug.
 
-Implement Features
-Look through the GitHub issues for features. Anything tagged with "feature" is open to whoever wants to implement it.
+## Fix Bugs
 
-Write Documentation
-pyqna could always use more documentation, whether as part of the official pyqna docs, in docstrings, or even on the web in blog posts, articles, and such.
+Look through the GitHub issues for bugs. Anything tagged with \"bug\" is
+open to whoever wants to implement it.
 
-Submit Feedback
-The best way to send feedback is to file an issue at https://github.com/programmer290399/pyqna/issues.
+## Implement Features
+
+Look through the GitHub issues for features. Anything tagged with
+\"feature\" is open to whoever wants to implement it.
+
+## Write Documentation
+
+pyqna could always use more documentation, whether as part of the
+official pyqna docs, in docstrings, or even on the web in blog posts,
+articles, and such.
+
+## Submit Feedback
+
+The best way to send feedback is to file an issue at
+<https://github.com/programmer290399/pyqna/issues>.
 
 If you are proposing a feature:
 
-Explain in detail how it would work.
-Keep the scope as narrow as possible, to make it easier to implement.
-Remember that this is a volunteer-driven project, and that contributions are welcome :)
-Get Started!
-Ready to contribute? Here's how to set up pyqna for local development.
+-   Explain in detail how it would work.
+-   Keep the scope as narrow as possible, to make it easier to
+    implement.
+-   Remember that this is a volunteer-driven project, and that
+    contributions are welcome :)
 
-Fork the pyqna repo on GitHub.
+# Get Started!
 
-Clone your fork locally:
+Ready to contribute? Here\'s how to set up [pyqna]{.title-ref} for local
+development.
 
-$ git clone git@github.com:your_name_here/pyqna.git
-Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
+1.  Fork the [pyqna](https://github.com/programmer290399/pyqna) repo on GitHub.
 
-$ mkvirtualenv pyqna
-$ cd pyqna/
-$ python setup.py develop
-Create a branch for local development:
+2.  Clone your fork locally:
+    ```bash
+    $ git clone git@github.com:your_name_here/pyqna.git
+    ```
 
-$ git checkout -b name-of-your-bugfix-or-feature
-Now you can make your changes locally.
+3.  Install your local copy into a virtualenv. This is how you set up your fork for local development:
+    ```bash
+    $ cd pyqna/
+    $ python3.7 -m venv .venv
+    $ . .venv/bin/activate
+    $ pip install -r requirements-dev.txt
+    $ pip install -e .[all]
+    ```
+4.  Create a branch for local development:
+    ``` bash
+    $ git checkout -b name-of-your-bugfix-or-feature
+    ```
+    Now you can make your changes locally.
 
-When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox:
+5.  When you're done making changes, check that your changes pass
+    flake8 and the tests:
+    tox:
+    ``` bash
+        $ flake8 .
+        $ pytest
+    ``` 
 
-$ flake8 pyqna tests
-$ python setup.py test
-$ tox
-To get flake8 and tox, just pip install them into your virtualenv.
 
-Commit your changes and push your branch to GitHub:
+6.  Commit your changes and push your branch to GitHub:
+    ``` bash
+    $ git add .
+    $ git commit -m "Your detailed description of your changes."
+    $ git push origin name-of-your-bugfix-or-feature
+    ``` 
 
-$ git add .
-$ git commit -m "Your detailed description of your changes."
-$ git push origin name-of-your-bugfix-or-feature
-Submit a pull request through the GitHub website.
+7.  Submit a pull request through the GitHub website.
 
-Pull Request Guidelines
+# Pull Request Guidelines
+
 Before you submit a pull request, check that it meets these guidelines:
 
-The pull request should include tests.
-If the pull request adds functionality, the docs should be updated. Put your new functionality into a function with a docstring, and add the feature to the list in README.rst.
-The pull request should work for Python 2.7, 3.3, 3.4, 3.5 and for PyPy. Check https://travis-ci.org/programmer290399/pyqna/pull_requests and make sure that the tests pass for all supported Python versions.
+1.  The pull request should include tests.
+2.  If the pull request adds functionality, the docs should be updated.
+    Put your new functionality into a function with a docstring, and add
+    the feature to the list in README.rst.
+3.  Make sure you check the CI passes before requesting review.
