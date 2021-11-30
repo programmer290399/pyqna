@@ -14,7 +14,7 @@
 ## Installation 
 * Currently we provide a PyPi package:
     ```bash
-    $ pip install pyqna
+    $ pip install pyqna[all]
     ```
 * In future we'd also have a Conda package.
 
