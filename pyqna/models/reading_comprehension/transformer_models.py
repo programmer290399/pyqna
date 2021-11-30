@@ -1,4 +1,6 @@
+import re
 import torch
+from torch.nn.functional import softmax
 from typing import Dict, List, Union
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, AutoConfig
 
@@ -51,25 +53,44 @@ class TransformerQnAModel(ReadingComprehensionModel):
             if key in self.config.__dict__:
                 self.config.__dict__[key] = value
 
-    def _infer_from_model(self, context: str, question: str) -> str:
+    def _infer_from_model(self, context: str, question: str) -> Dict:
         """
         Infer the answer from the model. One question at a time.
         """
+
+        ret_val = dict()
         inputs = self.tokenizer.encode_plus(
             question, context, add_special_tokens=True, return_tensors="pt"
         )
         input_ids = inputs["input_ids"].tolist()[0]
 
         outputs = self.model(**inputs)
+        
+        non_answer_tokens = [x if x in [0,1] else 0 for x in inputs.sequence_ids()]
+        non_answer_tokens = torch.tensor(non_answer_tokens, dtype=torch.bool)
+        
+        potential_start = torch.where(non_answer_tokens, outputs.start_logits, torch.tensor(float('-inf'),dtype=torch.float))
+        potential_end = torch.where(non_answer_tokens, outputs.end_logits, torch.tensor(float('-inf'),dtype=torch.float))
 
-        answer_start = torch.argmax(outputs.start_logits)
-        answer_end = torch.argmax(outputs.end_logits) + 1
+        potential_start = softmax(potential_start, dim = 1)
+        potential_end = softmax(potential_end, dim = 1)
+        answer_start = torch.argmax(potential_start)
+        answer_end = torch.argmax(potential_end)
+        answer = self.tokenizer.decode(inputs.input_ids.squeeze()[answer_start:answer_end+1])
+        ret_val['score'] = (potential_start.squeeze()[answer_start] *potential_end.squeeze()[answer_end]).item()
+        ret_val['start'], ret_val['end'] = answer_start.item(), answer_end.item()
+        ret_val['answer'] = answer
+        # {'score': 0.5254509449005127, 'start': 256, 'end': 264, 'answer': 'over 32+'}
 
-        answer = self.tokenizer.convert_tokens_to_string(
-            self.tokenizer.convert_ids_to_tokens(input_ids[answer_start:answer_end])
-        )
 
-        return answer
+        # answer_start = torch.argmax(outputs.start_logits)
+        # answer_end = torch.argmax(outputs.end_logits) + 1
+
+        # answer = self.tokenizer.convert_tokens_to_string(
+        #     self.tokenizer.convert_ids_to_tokens(input_ids[answer_start:answer_end])
+        # )
+
+        return ret_val
 
     def train(self, dataset) -> None:
         self.model.train()
