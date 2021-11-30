@@ -47,7 +47,7 @@ print(answers)
 ```
 **Output:**
 ```bash
-['4. 9 million', 'auckland']
+[{'score': 0.9889324307441711, 'start': 55, 'end': 58, 'answer': '4. 9 million'}, {'score': 0.31774288415908813, 'start': 74, 'end': 74, 'answer': 'auckland'}]
 ```
 
 ## License
