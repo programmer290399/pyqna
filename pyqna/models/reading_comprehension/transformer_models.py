@@ -37,6 +37,8 @@ class TransformerQnAModel(ReadingComprehensionModel):
         self._override_config(config)
 
         # Initialize model
+        self.device =  "cuda:0" if torch.cuda.is_available() else "cpu"
+
         if config.get("pre_trained", False):
             self.model = AutoModelForQuestionAnswering.from_pretrained(
                 config["model_name"]
@@ -44,7 +46,7 @@ class TransformerQnAModel(ReadingComprehensionModel):
             self.is_trained = True
         else:
             self.model = AutoModelForQuestionAnswering.from_config(self.config)
-
+        self.model.to(self.device)
     def _override_config(self, external_config: Dict) -> None:
         """
         Override the config of the model with the given config.
@@ -61,23 +63,22 @@ class TransformerQnAModel(ReadingComprehensionModel):
         ret_val = dict()
         inputs = self.tokenizer.encode_plus(
             question, context, add_special_tokens=True, return_tensors="pt"
-        )
-        input_ids = inputs["input_ids"].tolist()[0]
+        ).to(self.device)
 
         outputs = self.model(**inputs)
 
         non_answer_tokens = [x if x in [0, 1] else 0 for x in inputs.sequence_ids()]
-        non_answer_tokens = torch.tensor(non_answer_tokens, dtype=torch.bool)
+        non_answer_tokens = torch.tensor(non_answer_tokens, dtype=torch.bool, device=self.device)
 
         potential_start = torch.where(
             non_answer_tokens,
             outputs.start_logits,
-            torch.tensor(float("-inf"), dtype=torch.float),
+            torch.tensor(float("-inf"), dtype=torch.float,device=self.device),
         )
         potential_end = torch.where(
             non_answer_tokens,
             outputs.end_logits,
-            torch.tensor(float("-inf"), dtype=torch.float),
+            torch.tensor(float("-inf"), dtype=torch.float,device=self.device),
         )
 
         potential_start = softmax(potential_start, dim=1)
