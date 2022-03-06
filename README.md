@@ -3,9 +3,11 @@
 
 ![TESTS](https://img.shields.io/github/workflow/status/programmer290399/pyqna/Python%20application?style=for-the-badge) 
 ![pypi](https://img.shields.io/pypi/v/pyqna?style=for-the-badge) 
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/pyqna?style=for-the-badge)](https://pepy.tech/project/pyqna)
 ![last-commit](https://img.shields.io/github/last-commit/programmer290399/pyqna?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues-raw/programmer290399/pyqna?style=for-the-badge)
 ![license](https://img.shields.io/pypi/l/pyqna?style=for-the-badge)
-
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyqna?style=for-the-badge)
 <hr>
 
 **PyQnA** is a simple package that aims to provide a consistent and unified API for all Question Answering related tasks in Python. 
