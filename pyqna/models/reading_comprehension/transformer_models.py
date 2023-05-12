@@ -60,7 +60,6 @@ class TransformerQnAModel(ReadingComprehensionModel):
         Infer the answer from the model. One question at a time.
         """
 
-        ret_val = dict()
         inputs = self.tokenizer.encode_plus(
             question, context, add_special_tokens=True, return_tensors="pt"
         ).to(self.device)
@@ -88,10 +87,12 @@ class TransformerQnAModel(ReadingComprehensionModel):
         answer = self.tokenizer.decode(
             inputs.input_ids.squeeze()[answer_start : answer_end + 1]
         )
-        ret_val["score"] = (
-            potential_start.squeeze()[answer_start]
-            * potential_end.squeeze()[answer_end]
-        ).item()
+        ret_val = {
+            "score": (
+                potential_start.squeeze()[answer_start]
+                * potential_end.squeeze()[answer_end]
+            ).item()
+        }
         ret_val["start"], ret_val["end"] = answer_start.item(), answer_end.item()
         ret_val["answer"] = answer
 
