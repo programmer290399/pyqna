@@ -58,7 +58,7 @@ def get_extra_requires(path, add_all=True):
 
         # add tag `all` at the end
         if add_all:
-            extra_deps["all"] = set(vv for v in extra_deps.values() for vv in v)
+            extra_deps["all"] = {vv for v in extra_deps.values() for vv in v}
 
     return extra_deps
 
@@ -72,7 +72,7 @@ setup(
     author="Saahil Ali",
     author_email="programmer290399@gmail.com",
     url="https://github.com/programmer290399/pyqna",
-    python_requires=">={}".format(".".join(str(n) for n in min_version)),
+    python_requires=f'>={".".join(str(n) for n in min_version)}',
     packages=find_packages(exclude=["docs", "tests"]),
     entry_points={
         "console_scripts": [
