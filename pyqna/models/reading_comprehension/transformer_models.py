@@ -62,7 +62,7 @@ class TransformerQnAModel(ReadingComprehensionModel):
 
         ret_val = dict()
         inputs = self.tokenizer.encode_plus(
-            question, context, add_special_tokens=True, return_tensors="pt"
+            question, context, add_special_tokens=True, return_tensors="pt", truncation=True
         ).to(self.device)
 
         outputs = self.model(**inputs)
